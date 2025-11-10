@@ -47,6 +47,12 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        cosmic: {
+          purple: "hsl(var(--cosmic-purple))",
+          blue: "hsl(var(--cosmic-blue))",
+          gold: "hsl(var(--cosmic-gold))",
+          pink: "hsl(var(--cosmic-pink))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -80,10 +86,34 @@ export default {
             height: "0",
           },
         },
+        "sparkle": {
+          "0%, 100%": { opacity: "0.3", transform: "scale(0.8)" },
+          "50%": { opacity: "1", transform: "scale(1)" },
+        },
+        "float": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        "shimmer": {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "sparkle": "sparkle 2s ease-in-out infinite",
+        "float": "float 3s ease-in-out infinite",
+        "shimmer": "shimmer 3s linear infinite",
+      },
+      backgroundImage: {
+        "gradient-cosmic": "var(--gradient-cosmic)",
+        "gradient-gold": "var(--gradient-gold)",
+        "gradient-shimmer": "var(--gradient-shimmer)",
+      },
+      boxShadow: {
+        "cosmic": "var(--shadow-cosmic)",
+        "glow": "var(--shadow-glow)",
       },
     },
   },
