@@ -2,6 +2,95 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { useRef, useState, useEffect } from 'react';
 import * as THREE from 'three';
 
+interface Particle {
+  position: THREE.Vector3;
+  life: number;
+  velocity: THREE.Vector3;
+}
+
+const ParticleTrail = ({ butterflyPosition }: { butterflyPosition: THREE.Vector3 }) => {
+  const particlesRef = useRef<THREE.Points>(null);
+  const particles = useRef<Particle[]>([]);
+  const maxParticles = 50;
+
+  useFrame((state, delta) => {
+    // Spawn new particles at butterfly position
+    if (particles.current.length < maxParticles) {
+      particles.current.push({
+        position: butterflyPosition.clone().add(new THREE.Vector3(
+          (Math.random() - 0.5) * 0.2,
+          (Math.random() - 0.5) * 0.2,
+          (Math.random() - 0.5) * 0.2
+        )),
+        life: 1.0,
+        velocity: new THREE.Vector3(
+          (Math.random() - 0.5) * 0.3,
+          (Math.random() - 0.5) * 0.3,
+          (Math.random() - 0.5) * 0.3
+        )
+      });
+    }
+
+    // Update particles
+    particles.current = particles.current.filter(particle => {
+      particle.life -= delta * 0.8;
+      particle.position.add(particle.velocity.clone().multiplyScalar(delta));
+      return particle.life > 0;
+    });
+
+    // Update geometry
+    if (particlesRef.current) {
+      const positions = new Float32Array(particles.current.length * 3);
+      const colors = new Float32Array(particles.current.length * 3);
+      const sizes = new Float32Array(particles.current.length);
+
+      particles.current.forEach((particle, i) => {
+        positions[i * 3] = particle.position.x;
+        positions[i * 3 + 1] = particle.position.y;
+        positions[i * 3 + 2] = particle.position.z;
+
+        // Purple/pink gradient colors
+        colors[i * 3] = 0.6 + particle.life * 0.4;     // R
+        colors[i * 3 + 1] = 0.4 + particle.life * 0.3; // G
+        colors[i * 3 + 2] = 0.9 + particle.life * 0.1; // B
+
+        sizes[i] = particle.life * 0.15;
+      });
+
+      particlesRef.current.geometry.setAttribute(
+        'position',
+        new THREE.BufferAttribute(positions, 3)
+      );
+      particlesRef.current.geometry.setAttribute(
+        'color',
+        new THREE.BufferAttribute(colors, 3)
+      );
+      particlesRef.current.geometry.setAttribute(
+        'size',
+        new THREE.BufferAttribute(sizes, 1)
+      );
+      particlesRef.current.geometry.attributes.position.needsUpdate = true;
+      particlesRef.current.geometry.attributes.color.needsUpdate = true;
+      particlesRef.current.geometry.attributes.size.needsUpdate = true;
+    }
+  });
+
+  return (
+    <points ref={particlesRef}>
+      <bufferGeometry />
+      <pointsMaterial
+        size={0.1}
+        vertexColors
+        transparent
+        opacity={0.8}
+        blending={THREE.AdditiveBlending}
+        depthWrite={false}
+        sizeAttenuation
+      />
+    </points>
+  );
+};
+
 const Butterfly = ({ targetPosition }: { targetPosition: THREE.Vector3 }) => {
   const groupRef = useRef<THREE.Group>(null);
   const leftWingRef = useRef<THREE.Mesh>(null);
@@ -67,8 +156,10 @@ const Butterfly = ({ targetPosition }: { targetPosition: THREE.Vector3 }) => {
   });
 
   return (
-    <group ref={groupRef}>
-      {/* Body */}
+    <>
+      <ParticleTrail butterflyPosition={position} />
+      <group ref={groupRef}>
+        {/* Body */}
       <mesh>
         <cylinderGeometry args={[0.05, 0.05, 0.4, 8]} />
         <meshStandardMaterial color="#2d1b4e" />
@@ -118,6 +209,7 @@ const Butterfly = ({ targetPosition }: { targetPosition: THREE.Vector3 }) => {
         />
       </mesh>
     </group>
+    </>
   );
 };
 
