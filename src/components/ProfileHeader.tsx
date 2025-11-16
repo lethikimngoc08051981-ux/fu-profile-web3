@@ -37,7 +37,7 @@ export const ProfileHeader = () => {
 
           {/* User Info */}
           <div className="flex-1 text-center md:text-left mb-4">
-            <h1 className="text-3xl font-bold text-foreground mb-1">Camly Duong</h1>
+            <h1 className="text-3xl font-bold text-foreground mb-1">Quang Vu</h1>
             <p className="text-muted-foreground">226 người theo dõi · 0 đang theo dõi</p>
           </div>
 
