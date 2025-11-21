@@ -3,7 +3,7 @@ import { useAccount, useChainId } from 'wagmi';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ExternalLink } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/integrations/supabase/dbClient';
 import { formatDistanceToNow } from 'date-fns';
 import { vi } from 'date-fns/locale';
 

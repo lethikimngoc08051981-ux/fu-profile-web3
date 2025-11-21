@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/integrations/supabase/dbClient';
 import { useNavigate } from 'react-router-dom';
 import { Home, Users, User, Wallet, LogOut, LogIn, Moon, Sun } from 'lucide-react';
 import { useState, useEffect } from 'react';

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/integrations/supabase/dbClient';
 import { Navbar } from '@/components/layout/Navbar';
 import { FriendsList } from '@/components/friends/FriendsList';
 import { Skeleton } from '@/components/ui/skeleton';
