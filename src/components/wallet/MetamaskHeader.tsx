@@ -2,7 +2,7 @@ import { useAccount, useBalance, useDisconnect, useChainId } from 'wagmi';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/integrations/supabase/dbClient';
 import { useEffect, useState } from 'react';
 import { formatEther } from 'viem';
 import { Copy, ExternalLink, ChevronDown, Settings } from 'lucide-react';

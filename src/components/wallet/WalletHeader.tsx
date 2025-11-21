@@ -2,7 +2,7 @@ import { useAccount, useBalance, useDisconnect } from 'wagmi';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/integrations/supabase/dbClient';
 import { useEffect, useState } from 'react';
 import { formatEther } from 'viem';
 
